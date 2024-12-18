@@ -22,24 +22,29 @@ int main(int argc, char* argv[]){
         MQTTPublish (TOPIC, "Message à messager");
         while(digitalRead(btn)==0);
     };
-    MQTTDisconnect();
+    MQTTDisconnect()
+
+    // Appel à la fonction ascii_to_morse avec le callback
+    std::cout << "Code Morse: ";
+    ascii_to_morse(argv[], printMorse);
+    std::cout << std::endl;
+
     return 0;
 }
 
-on_mqtt_msg(){
-#J'ai pas compris à quoi ça sert cet endroit si mqtt est dans le int main
-}
 
 on_morse_ev(enum){
     void decode(char *mess)
 {
-	if (*mess=='1') {
+	if (*mess=='_') {
 						digitalWrite(led,HIGH);
 						printf("LED allumee\n\r");
 					  }
         else 		 {
-						digitalWrite(led,LOW);
-						printf("LED eteinte\n\r");
+						digitalWrite(led,HIGH);
+						sleep(500);
+						printf("LED clignotante\n\r");
+						digitalWrite(led,LOW)
 					  }
 }
 
