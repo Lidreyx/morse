@@ -1,66 +1,54 @@
 #include <iostream>
-#include <unordered_map>
+#include <sstream>
 #include <string>
-#include <stdio.h>
+#include <map>
+#include <cctype> // Pour std::tolower
 
-// Fonction pour initialiser la table de correspondance 
-void initializeMorseCode(std::unordered_map<char, std::string>& morseCode) {
-    morseCode['A'] = ".-";
-    morseCode['B'] = "-...";
-    morseCode['C'] = "-.-.";
-    morseCode['D'] = "-..";
-    morseCode['E'] = ".";
-    morseCode['F'] = "..-.";
-    morseCode['G'] = "--.";
-    morseCode['H'] = "....";
-    morseCode['I'] = "..";
-    morseCode['J'] = ".---";
-    morseCode['K'] = "-.-";
-    morseCode['L'] = ".-..";
-    morseCode['M'] = "--";
-    morseCode['N'] = "-.";
-    morseCode['O'] = "---";
-    morseCode['P'] = ".--.";
-    morseCode['Q'] = "--.-";
-    morseCode['R'] = ".-.";
-    morseCode['S'] = "...";
-    morseCode['T'] = "-";
-    morseCode['U'] = "..-";
-    morseCode['V'] = "...-";
-    morseCode['W'] = ".--";
-    morseCode['X'] = "-..-";
-    morseCode['Y'] = "-.--";
-    morseCode['Z'] = "--..";
+// Déclaration de la fonction
+std::string EnglishToMorse(const std::string& text);
 
-    morseCode['1'] = ".----";
-    morseCode['2'] = "..---";
-    morseCode['3'] = "...--";
-    morseCode['4'] = "....-";
-    morseCode['5'] = ".....";
-    morseCode['6'] = "-....";
-    morseCode['7'] = "--...";
-    morseCode['8'] = "---..";
-    morseCode['9'] = "----.";
-    morseCode['0'] = "-----";
+int main() {
+    std::string text = "bonjour"; // Exemple de texte en anglais
+    std::string morseCode = EnglishToMorse(text);  // Appel à la fonction avec le bon nom
 
-    // Ajouter des symboles de ponctuation et autres
-    morseCode['.'] = ".-.-.-";
-    morseCode[','] = "--..--";
-    morseCode['?'] = "..--..";
-    morseCode[' '] = "/";  // Séparateur entre les mots
+    std::cout << "Morse Code: " << morseCode << std::endl;
+    std::cout << "English Text: " << text << std::endl;
+
+    return 0;
 }
 
-//enum{MORSE_DOT, MORSE_DASH, MORSE_WSEP};
-void ascii_to_morse(const char* text, void(morse_callback)(const std::string&)){
-	
-	std::unordered_map<char, std::string> morseCode;
-	initializeMorseCode(morseCode);
-	
-	for (int i = 0; text[i] != '\0'; ++i) {
-        char c = std::toupper(text[i]);  // Convertir en majuscule
-        if (morseCode.find(c) != morseCode.end()) {
-            // Appeler la fonction callback avec le code Morse
-            morse_callback(morseCode[c]);
-    	}
-	}
+// Définition de la fonction pour convertir l'anglais en morse
+std::string EnglishToMorse(const std::string& text) {
+    std::string morseCode;
+    
+    // Exemple simple de correspondance des lettres
+    std::map<char, std::string> morseCodeMap = {
+        {'a', ".-"}, {'b', "-..."}, {'c', "-.-."}, {'d', "-.."}, {'e', "."},
+        {'f', "..-."}, {'g', "--."}, {'h', "...."}, {'i', ".."}, {'j', ".---"},
+        {'k', "-.-"}, {'l', ".-.."}, {'m', "--"}, {'n', "-."}, {'o', "---"},
+        {'p', ".--."}, {'q', "--.-"}, {'r', ".-."}, {'s', "..."}, {'t', "-"},
+        {'u', "..-"}, {'v', "...-"}, {'w', ".--"}, {'x', "-..-"}, {'y', "-.--"},
+        {'z', "--.."},
+        {'0', "-----"}, {'1', ".----"}, {'2', "..---"}, {'3', "...--"},
+        {'4', "....-"}, {'5', "....."}, {'6', "-...."}, {'7', "--..."}, 
+        {'8', "---.."}, {'9', "----."}
+    };
+    
+    // Convertir chaque caractère en morse
+    for (char c : text) {
+        c = std::tolower(c);  // Convertir en minuscule pour uniformiser
+        if (c == ' ') {
+            morseCode += "/ ";  // Séparateur entre les mots
+        } else {
+            // Vérifier si le caractère est dans la map
+            if (morseCodeMap.find(c) != morseCodeMap.end()) {
+                morseCode += morseCodeMap[c] + " ";  // Ajouter le code morse de chaque lettre
+            } else {
+                // Si le caractère n'est pas dans la map (par exemple une lettre invalide), l'ignorer
+                morseCode += "? ";  // Ajouter un '?' pour les caractères inconnus
+            }
+        }
+    }
+
+    return morseCode;
 }
