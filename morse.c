@@ -4,7 +4,7 @@
 #include <map>
 #include <cctype> // for std::tolower
 
-// function initiliazing
+// Function declaration
 std::string EnglishToMorse(const std::string& text);
 
 int main() {
@@ -17,11 +17,11 @@ int main() {
     return 0;
 }
 
-// Définition de la fonction pour convertir l'anglais en morse
+// Function definition for converting English to Morse
 std::string EnglishToMorse(const std::string& text) {
     std::string morseCode;
     
-    // Exemple simple de correspondance des lettres
+     // Simple example of letter mapping
     std::map<char, std::string> morseCodeMap = {
         {'a', ".-"}, {'b', "-..."}, {'c', "-.-."}, {'d', "-.."}, {'e', "."},
         {'f', "..-."}, {'g', "--."}, {'h', "...."}, {'i', ".."}, {'j', ".---"},
@@ -34,18 +34,18 @@ std::string EnglishToMorse(const std::string& text) {
         {'8', "---.."}, {'9', "----."}
     };
     
-    // turn every caracter into morse code
+    // Convert every character to Morse code
     for (char c : text) {
-        c = std::tolower(c);  // convert maj letter into lowercase letter
+        c = std::tolower(c);  // Convert uppercase letter to lowercase
         if (c == ' ') {
-            morseCode += "/ ";  // space between word
+            morseCode += "/ ";  // space between words
         } else {
-            // check if the caracter is on the traduction map
+            // Check if the character exists in the translation map
             if (morseCodeMap.find(c) != morseCodeMap.end()) {
-                morseCode += morseCodeMap[c] + " ";  // add the morse code of every letter
+                morseCode += morseCodeMap[c] + " ";  // add the morse code of the letter
             } else {
                 
-                morseCode += "? ";  // add a "?" if unknown caracter
+                morseCode += "? ";  // add "?" for unknown caracter
             }
         }
     }
