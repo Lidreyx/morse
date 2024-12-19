@@ -5,6 +5,8 @@
 #include "MQTTClient.h"
 #include "mqtt.h"
 #define RET 0
+#define TOPIC "exemple/topic" 
+// J'ai oublié d'ajouter la constante TOPIC avant, à modifier pour usage
 
 // Function prototype for decoding messages
 void decode(char *mess);
