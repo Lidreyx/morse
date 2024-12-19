@@ -30,14 +30,9 @@ int main(int argc, char* argv[]){
     // Exemple de message en code Morse
     MorseToLed(morseCode);  // Appel de la fonction pour envoyer le code Morse
 
-    return 0;
 }
 
     return 0;
 }
 
-
-on_morse_ev(enum){
-    void decode(char *mess)
-}
 
