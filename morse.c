@@ -2,14 +2,14 @@
 #include <sstream>
 #include <string>
 #include <map>
-#include <cctype> // Pour std::tolower
+#include <cctype> // for std::tolower
 
-// Déclaration de la fonction
+// function initiliazing
 std::string EnglishToMorse(const std::string& text);
 
 int main() {
-    std::string text = "bonjour"; // Exemple de texte en anglais
-    std::string morseCode = EnglishToMorse(text);  // Appel à la fonction avec le bon nom
+    std::string text = "bonjour"; // exemple of text
+    std::string morseCode = EnglishToMorse(text);  // call of the function
 
     std::cout << "Morse Code: " << morseCode << std::endl;
     std::cout << "English Text: " << text << std::endl;
@@ -34,18 +34,18 @@ std::string EnglishToMorse(const std::string& text) {
         {'8', "---.."}, {'9', "----."}
     };
     
-    // Convertir chaque caractère en morse
+    // turn every caracter into morse code
     for (char c : text) {
-        c = std::tolower(c);  // Convertir en minuscule pour uniformiser
+        c = std::tolower(c);  // convert maj letter into lowercase letter
         if (c == ' ') {
-            morseCode += "/ ";  // Séparateur entre les mots
+            morseCode += "/ ";  // space between word
         } else {
-            // Vérifier si le caractère est dans la map
+            // check if the caracter is on the traduction map
             if (morseCodeMap.find(c) != morseCodeMap.end()) {
-                morseCode += morseCodeMap[c] + " ";  // Ajouter le code morse de chaque lettre
+                morseCode += morseCodeMap[c] + " ";  // add the morse code of every letter
             } else {
-                // Si le caractère n'est pas dans la map (par exemple une lettre invalide), l'ignorer
-                morseCode += "? ";  // Ajouter un '?' pour les caractères inconnus
+                
+                morseCode += "? ";  // add a "?" if unknown caracter
             }
         }
     }
