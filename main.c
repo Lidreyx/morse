@@ -21,14 +21,22 @@ int main(int argc, char* argv[]){
         MQTTPublish (TOPIC, "Message à messager");
         while(digitalRead(btn)==0);
     };
-    MQTTDisconnect()
+    MQTTDisconnect();
 
-    // callback to ascii_to_morse
-    std::cout << "Code Morse: ";
-    ascii_to_morse(argv[], printMorse);
-    std::cout << std::endl;
-    MorseToLed(morseCode);  // call morseCode to print the morse message
+ // make sure an argument was trasnfered
+    if (argc > 1) {
+        // turn a text into morse
+        std::string morseCode = EnglishToMorse(argv[1]);
+        std::cout << "Code Morse: " << morseCode << std::endl;
+        
+        // send morse to the led
+        MorseToLed(morseCode.c_str());
+    } else {
+        std::cout << "Aucun texte à convertir en morse." << std::endl;
+    }
 
+    return 0;
+}
 }
 
     return 0;
