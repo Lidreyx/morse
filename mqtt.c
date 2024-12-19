@@ -60,15 +60,10 @@ void MQTTBegin()
 {
     int rc = -1;
     printf("Initializing MQTT for <%s> broker\n",BROKER_ADDR);
-    MQTTClient_connectOptions conn_opts = MQTTClient_connectOptions_initializer;
-    conn_opts.keepAliveInterval = KEEP_ALIVE;
-    conn_opts.cleansession = 1;
-    conn_opts.username = USERNAME;
-    conn_opts.password = PASSWORD;
     MQTTClient_create(&client, BROKER_ADDR, CLIENTID, MQTTCLIENT_PERSISTENCE_NONE, NULL);
     MQTTClient_setCallbacks(client, NULL, connlost, msgarrvd, NULL);
 
-    while ((rc = MQTTClient_connect(client, &conn_opts)) != MQTTCLIENT_SUCCESS)
+    while ((rc = MQTTClient_connect(client)) != MQTTCLIENT_SUCCESS)
     {
         printf("Failed to connect, return code %d\n", rc);
         sleep(TIMEOUT / 1000); 
