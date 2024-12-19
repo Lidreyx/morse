@@ -6,30 +6,27 @@
 #include "morse.c"
 #include "mqtt.c"
 #include "led.c"
-#define led 0
-#define btn 1
+#define led 0  // LED GPIO pin
+#define btn 1  // Button GPIO pin
 
-
-int main(int argc, char* argv[]){
+int main(int argc, char* argv[]) {
     wiringPiSetup();
-    pinMode(LED_PIN, OUTPUT);  // Definition of GPIO as an output
+    pinMode(LED_PIN, OUTPUT);  // Configure LED pin as output
 
-    MQTTBegin ();
-    MQTTSubscribe (TOPIC);
-    while(1) {
-        while (digitalRead(btn)==1);
-        MQTTPublish (TOPIC, "Message à messager");
-        while(digitalRead(btn)==0);
+    MQTTBegin();
+    MQTTSubscribe(TOPIC);  // Subscribe to the MQTT topic
+
+    while (1) {  
+        while (digitalRead(btn) == 1);  // Wait for button press
+        MQTTPublish(TOPIC, "Message à messager");  // Publish message on press
+        while (digitalRead(btn) == 0);  // Wait for button release
     };
+
     MQTTDisconnect();
 
- // make sure an argument was trasnfered
-    if (argc > 1) {
-        // turn a text into morse
+    if (argc > 1) {  // Convert and display Morse code if text is provided
         std::string morseCode = EnglishToMorse(argv[1]);
         std::cout << "Code Morse: " << morseCode << std::endl;
-        
-        // send morse to the led
         MorseToLed(morseCode.c_str());
     } else {
         std::cout << "Aucun texte à convertir en morse." << std::endl;
@@ -37,9 +34,4 @@ int main(int argc, char* argv[]){
 
     return 0;
 }
-}
-
-    return 0;
-}
-
 
