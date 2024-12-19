@@ -5,7 +5,6 @@
 #include <wiringPi.h>
 #include "morse.c"
 #include "mqtt.c"
-#include "sleep.c"
 #include "led.c"
 #define led 0
 #define btn 1
@@ -13,8 +12,8 @@
 
 int main(int argc, char* argv[]){
     wiringPiSetup();
-    pinMode(led,OUTPUT);
-    pinMode(btn,INPUT);
+    pinMode(LED_PIN, OUTPUT);  // Définition du GPIO 7 en sortie
+
     MQTTBegin ();
     MQTTSubscribe (TOPIC);
     while(1) {
@@ -28,6 +27,11 @@ int main(int argc, char* argv[]){
     std::cout << "Code Morse: ";
     ascii_to_morse(argv[], printMorse);
     std::cout << std::endl;
+    // Exemple de message en code Morse
+    MorseToLed(morseCode);  // Appel de la fonction pour envoyer le code Morse
+
+    return 0;
+}
 
     return 0;
 }
@@ -35,17 +39,5 @@ int main(int argc, char* argv[]){
 
 on_morse_ev(enum){
     void decode(char *mess)
-{
-	if (*mess=='_') {
-						digitalWrite(led,HIGH);
-						printf("LED allumee\n\r");
-					  }
-        else 		 {
-						digitalWrite(led,HIGH);
-						sleep(500);
-						printf("LED clignotante\n\r");
-						digitalWrite(led,LOW)
-					  }
 }
 
-}
