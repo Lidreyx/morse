@@ -12,7 +12,7 @@
 
 int main(int argc, char* argv[]){
     wiringPiSetup();
-    pinMode(LED_PIN, OUTPUT);  // Définition du GPIO 7 en sortie
+    pinMode(LED_PIN, OUTPUT);  // Definition of GPIO as an output
 
     MQTTBegin ();
     MQTTSubscribe (TOPIC);
@@ -23,12 +23,11 @@ int main(int argc, char* argv[]){
     };
     MQTTDisconnect()
 
-    // Appel à la fonction ascii_to_morse avec le callback
+    // callback to ascii_to_morse
     std::cout << "Code Morse: ";
     ascii_to_morse(argv[], printMorse);
     std::cout << std::endl;
-    // Exemple de message en code Morse
-    MorseToLed(morseCode);  // Appel de la fonction pour envoyer le code Morse
+    MorseToLed(morseCode);  // call morseCode to print the morse message
 
 }
 
